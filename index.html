@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>席替え</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a26;
+            --border: #2a2a3e;
+            --accent: #7c6aff;
+            --accent2: #ff6a6a;
+            --text: #e0e0f0;
+            --muted: #555570;
+            --success: #6affb0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px 0 10px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            letter-spacing: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+        }
+
+        .setup-card {
+            width: 100%;
+            max-width: 900px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .input-field {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 1.1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        .input-field:focus { border-color: var(--accent); }
+
+        .info-bar {
+            display: flex;
+            gap: 20px;
+            padding: 12px 16px;
+            background: var(--surface2);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .info-bar span { color: var(--text); font-weight: 700; }
+
+        .btn-generate {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-generate:hover { filter: brightness(1.2); transform: translateY(-1px); }
+        .btn-generate:active { transform: translateY(0); }
+
+        /* 教室エリア */
+        .classroom-wrap {
+            width: 100%;
+            max-width: 900px;
+            display: none;
+        }
+
+        .classroom-wrap.visible { display: block; }
+
+        .blackboard {
+            background: #1a2e1a;
+            border: 2px solid #2d4d2d;
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+            margin-bottom: 8px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 6px;
+            color: #6aff9a;
+            text-shadow: 0 0 20px rgba(106,255,154,0.4);
+        }
+
+        .teacher-desk {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--muted);
+        }
+
+        .seat-grid {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .seat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.15s;
+            user-select: none;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .seat:hover { border-color: var(--accent); transform: scale(1.04); z-index: 2; }
+        .seat.dragging { opacity: 0.4; transform: scale(0.95); }
+        .seat.drag-over { border-color: var(--accent); background: var(--surface2); box-shadow: 0 0 12px rgba(124,106,255,0.4); }
+
+        .seat.empty {
+            background: transparent;
+            border-style: dashed;
+            border-color: #222233;
+            color: var(--muted);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            cursor: default;
+        }
+
+        .seat.empty:hover { transform: none; border-color: #222233; }
+
+        /* シャッフルアニメーション */
+        @keyframes shuffle {
+            0% { transform: scale(1); }
+            25% { transform: scale(0.85) rotate(-3deg); opacity: 0.5; }
+            50% { transform: scale(1.1) rotate(2deg); opacity: 0.8; }
+            75% { transform: scale(0.9) rotate(-1deg); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .seat.shuffling {
+            animation: shuffle 0.5s ease-in-out;
+        }
+
+        .btn-reshuffle {
+            width: 100%;
+            padding: 14px;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            color: var(--accent);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .btn-reshuffle:hover { background: var(--accent); color: #fff; }
+
+        .drag-hint {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="title">席替え</div>
+    <div class="subtitle">SEAT SHUFFLE GENERATOR</div>
+</header>
+
+<div class="setup-card">
+    <div class="setup-grid">
+        <div class="input-group">
+            <div class="input-label">列数（横）</div>
+            <input class="input-field" type="number" id="cols" value="6" min="1" max="12" oninput="updateInfo()">
+        </div>
+        <div class="input-group">
+            <div class="input-label">行数（縦）</div>
+            <input class="input-field" type="number" id="rows" value="5" min="1" max="12" oninput="updateInfo()">
+        </div>
+        <div class="input-group">
+            <div class="input-label">最初の番号</div>
+            <input class="input-field" type="number" id="numStart" value="1" min="1" oninput="updateInfo()">
+        </div>
+        <div class="input-group">
+            <div class="input-label">最後の番号</div>
+            <input class="input-field" type="number" id="numEnd" value="30" min="1" oninput="updateInfo()">
+        </div>
+    </div>
+    <div class="info-bar" id="info-bar">
+        <div>総席数：<span id="info-total">30</span></div>
+        <div>生徒数：<span id="info-students">30</span></div>
+        <div>空席数：<span id="info-empty">0</span></div>
+    </div>
+    <button class="btn-generate" onclick="generate()">席替えスタート</button>
+</div>
+
+<div class="classroom-wrap" id="classroom">
+    <div class="blackboard">黒板</div>
+    <div class="teacher-desk">教卓</div>
+    <div class="seat-grid" id="seat-grid"></div>
+    <div class="drag-hint">✦ ドラッグ＆ドロップで席を入れ替えられます</div>
+    <button class="btn-reshuffle" onclick="generate()">もう一度シャッフル</button>
+</div>
+
+<script>
+var dragSrc = null;
+
+function updateInfo() {
+    var cols = parseInt(document.getElementById('cols').value) || 0;
+    var rows = parseInt(document.getElementById('rows').value) || 0;
+    var start = parseInt(document.getElementById('numStart').value) || 0;
+    var end = parseInt(document.getElementById('numEnd').value) || 0;
+    var total = cols * rows;
+    var students = end - start + 1;
+    var empty = Math.max(0, total - students);
+    document.getElementById('info-total').innerText = total;
+    document.getElementById('info-students').innerText = students;
+    document.getElementById('info-empty').innerText = empty;
+}
+
+function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+}
+
+function generate() {
+    var cols = parseInt(document.getElementById('cols').value);
+    var rows = parseInt(document.getElementById('rows').value);
+    var start = parseInt(document.getElementById('numStart').value);
+    var end = parseInt(document.getElementById('numEnd').value);
+
+    if (!cols || !rows || !start || !end || start > end) return;
+
+    var total = cols * rows;
+    var students = [];
+    for (var i = start; i <= end; i++) students.push(i);
+    shuffle(students);
+
+    // 空席を右下に追加
+    while (students.length < total) students.push(null);
+
+    var grid = document.getElementById('seat-grid');
+    grid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+    grid.innerHTML = '';
+
+    for (var i = 0; i < total; i++) {
+        var seat = document.createElement('div');
+        seat.className = 'seat' + (students[i] === null ? ' empty' : '');
+        seat.innerText = students[i] === null ? '空席' : students[i];
+        seat.dataset.num = students[i] === null ? '' : students[i];
+
+        if (students[i] !== null) {
+            seat.draggable = true;
+            seat.addEventListener('dragstart', onDragStart);
+            seat.addEventListener('dragover', onDragOver);
+            seat.addEventListener('dragleave', onDragLeave);
+            seat.addEventListener('drop', onDrop);
+            seat.addEventListener('dragend', onDragEnd);
+        }
+
+        // シャッフルアニメーション
+        var delay = i * 18;
+        seat.style.animationDelay = delay + 'ms';
+        seat.classList.add('shuffling');
+        seat.addEventListener('animationend', function() {
+            this.classList.remove('shuffling');
+        });
+
+        grid.appendChild(seat);
+    }
+
+    document.getElementById('classroom').classList.add('visible');
+    document.getElementById('classroom').scrollIntoView({ behavior: 'smooth' });
+}
+
+function onDragStart(e) {
+    dragSrc = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function onDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (this !== dragSrc) this.classList.add('drag-over');
+}
+
+function onDragLeave() {
+    this.classList.remove('drag-over');
+}
+
+function onDrop(e) {
+    e.preventDefault();
+    if (this === dragSrc) return;
+    var srcText = dragSrc.innerText;
+    var dstText = this.innerText;
+    dragSrc.innerText = dstText;
+    this.innerText = srcText;
+    this.classList.remove('drag-over');
+}
+
+function onDragEnd() {
+    this.classList.remove('dragging');
+    document.querySelectorAll('.seat').forEach(function(s) {
+        s.classList.remove('drag-over');
+    });
+}
+
+updateInfo();
+</script>
+</body>
+</html>
