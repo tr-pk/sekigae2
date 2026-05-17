@@ -16,244 +16,66 @@
             --text: #e0e0f0;
             --muted: #555570;
             --success: #6affb0;
-        }
-
+            }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        header {
-            width: 100%;
-            max-width: 900px;
-            padding: 20px 0 10px;
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 30px;
-        }
-
-        .title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            color: var(--accent);
-            letter-spacing: 4px;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: var(--muted);
-            letter-spacing: 2px;
-        }
-
-        .setup-card {
-            width: 100%;
-            max-width: 900px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-            margin-bottom: 24px;
-        }
-
-        .setup-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .input-label {
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            color: var(--muted);
-            text-transform: uppercase;
-        }
-
-        .input-field {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: var(--text);
-            font-size: 1.1rem;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 2px;
-            outline: none;
-            transition: border-color 0.2s;
-            width: 100%;
-        }
-
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        header { width: 100%; max-width: 900px; padding: 20px 0 10px; display: flex; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+        .title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--accent); letter-spacing: 4px; }
+        .subtitle { font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; }
+        .setup-card { width: 100%; max-width: 900px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px; }
+        .section-label { font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+        .setup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-label { font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+        .input-field { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; color: var(--text); font-size: 1.1rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; outline: none; transition: border-color 0.2s; width: 100%; }
         .input-field:focus { border-color: var(--accent); }
-
-        .info-bar {
-            display: flex;
-            gap: 20px;
-            padding: 12px 16px;
-            background: var(--surface2);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.8rem;
-            color: var(--muted);
-        }
-
+        .info-bar { display: flex; gap: 20px; padding: 12px 16px; background: var(--surface2); border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; color: var(--muted); }
         .info-bar span { color: var(--text); font-weight: 700; }
-
-        .btn-generate {
-            width: 100%;
-            padding: 16px;
-            background: var(--accent);
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.3rem;
-            letter-spacing: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
+        .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+        .fixed-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+        .fixed-row { display: flex; align-items: center; gap: 8px; }
+        .fixed-row .input-field { width: 70px; flex-shrink: 0; text-align: center; }
+        .fixed-label { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+        .btn-icon { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface2); color: var(--text); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+        .btn-icon:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-icon.remove:hover { border-color: var(--accent2); color: var(--accent2); }
+        .btn-add { display: flex; align-items: center; gap: 6px; background: none; border: 1px dashed var(--border); border-radius: 8px; padding: 8px 14px; color: var(--muted); font-size: 0.8rem; cursor: pointer; transition: all 0.15s; letter-spacing: 1px; }
+        .btn-add:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-generate { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 10px; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 4px; cursor: pointer; transition: all 0.2s; margin-top: 20px; }
         .btn-generate:hover { filter: brightness(1.2); transform: translateY(-1px); }
-        .btn-generate:active { transform: translateY(0); }
-
-        /* 教室エリア */
-        .classroom-wrap {
-            width: 100%;
-            max-width: 900px;
-            display: none;
-        }
-
+        .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; filter: none; }
+        .classroom-wrap { width: 100%; max-width: 900px; display: none; }
         .classroom-wrap.visible { display: block; }
-
-        .blackboard {
-            background: #1a2e1a;
-            border: 2px solid #2d4d2d;
-            border-radius: 8px;
-            padding: 14px;
-            text-align: center;
-            margin-bottom: 8px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 6px;
-            color: #6aff9a;
-            text-shadow: 0 0 20px rgba(106,255,154,0.4);
-        }
-
-        .teacher-desk {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px;
-            text-align: center;
-            margin-bottom: 24px;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: var(--muted);
-        }
-
-        .seat-grid {
-            display: grid;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .seat {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 6px;
-            text-align: center;
-            cursor: grab;
-            transition: all 0.15s;
-            user-select: none;
-            min-height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            position: relative;
-        }
-
+        .blackboard { background: #1a2e1a; border: 2px solid #2d4d2d; border-radius: 8px; padding: 14px; text-align: center; margin-bottom: 8px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 6px; color: #6aff9a; text-shadow: 0 0 20px rgba(106,255,154,0.4); }
+        .teacher-desk { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px; text-align: center; margin-bottom: 24px; font-size: 0.7rem; letter-spacing: 3px; color: var(--muted); }
+        .seat-grid { display: grid; gap: 8px; margin-bottom: 20px; }
+        .seat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 6px; text-align: center; cursor: grab; transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; user-select: none; min-height: 56px; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 1px; }
         .seat:hover { border-color: var(--accent); transform: scale(1.04); z-index: 2; }
         .seat.dragging { opacity: 0.4; transform: scale(0.95); }
         .seat.drag-over { border-color: var(--accent); background: var(--surface2); box-shadow: 0 0 12px rgba(124,106,255,0.4); }
-
-        .seat.empty {
-            background: transparent;
-            border-style: dashed;
-            border-color: #222233;
-            color: var(--muted);
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            cursor: default;
-        }
-
+        .seat.rolling { color: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px rgba(124,106,255,0.3); cursor: default; font-size: 1.3rem; }
+        
+        
+        
+        .seat { position: relative; }
+        .seat.empty { background: transparent; border-style: dashed; border-color: #222233; color: var(--muted); font-size: 0.6rem; letter-spacing: 2px; cursor: default; }
         .seat.empty:hover { transform: none; border-color: #222233; }
-
-        /* シャッフルアニメーション */
-        @keyframes shuffle {
-            0% { transform: scale(1); }
-            25% { transform: scale(0.85) rotate(-3deg); opacity: 0.5; }
-            50% { transform: scale(1.1) rotate(2deg); opacity: 0.8; }
-            75% { transform: scale(0.9) rotate(-1deg); opacity: 0.6; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .seat.shuffling {
-            animation: shuffle 0.5s ease-in-out;
-        }
-
-        .btn-reshuffle {
-            width: 100%;
-            padding: 14px;
-            background: var(--surface);
-            border: 1px solid var(--accent);
-            border-radius: 10px;
-            color: var(--accent);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 8px;
-        }
-
+        .btn-reshuffle { width: 100%; padding: 14px; background: var(--surface); border: 1px solid var(--accent); border-radius: 10px; color: var(--accent); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 4px; cursor: pointer; transition: all 0.2s; margin-bottom: 8px; }
         .btn-reshuffle:hover { background: var(--accent); color: #fff; }
-
-        .drag-hint {
-            text-align: center;
-            font-size: 0.7rem;
-            color: var(--muted);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
+        .btn-reshuffle:disabled { opacity: 0.4; cursor: not-allowed; }
+        .drag-hint { text-align: center; font-size: 0.7rem; color: var(--muted); letter-spacing: 2px; margin-bottom: 20px; }
+        .legend { display: flex; gap: 16px; margin-bottom: 16px; font-size: 0.75rem; color: var(--muted); }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
     </style>
 </head>
 <body>
-
 <header>
     <div class="title">席替え</div>
     <div class="subtitle">SEAT SHUFFLE GENERATOR</div>
 </header>
-
 <div class="setup-card">
+    <div class="section-label">基本設定</div>
     <div class="setup-grid">
         <div class="input-group">
             <div class="input-label">列数（横）</div>
@@ -272,24 +94,32 @@
             <input class="input-field" type="number" id="numEnd" value="30" min="1" oninput="updateInfo()">
         </div>
     </div>
-    <div class="info-bar" id="info-bar">
+    <div class="info-bar">
         <div>総席数：<span id="info-total">30</span></div>
         <div>生徒数：<span id="info-students">30</span></div>
         <div>空席数：<span id="info-empty">0</span></div>
     </div>
-    <button class="btn-generate" onclick="generate()">席替えスタート</button>
+    <hr class="divider">
+    <div class="section-label">固定席設定（任意）</div>
+    <div class="fixed-list" id="fixed-list"></div>
+    <button class="btn-add" onclick="addFixedRow()">＋ 固定席を追加</button>
+    <button class="btn-generate" id="btn-generate" onclick="generate()">席替えスタート</button>
 </div>
 
 <div class="classroom-wrap" id="classroom">
-    <div class="blackboard">黒板</div>
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--fixed);"></div>固定席</div>
+    </div>
+    <div class="blackboard">⬛ 黒板 ⬛</div>
     <div class="teacher-desk">教卓</div>
     <div class="seat-grid" id="seat-grid"></div>
-    <div class="drag-hint">✦ ドラッグ＆ドロップで席を入れ替えられます</div>
-    <button class="btn-reshuffle" onclick="generate()">もう一度シャッフル</button>
+    <div class="drag-hint" id="drag-hint" style="display:none;">✦ ドラッグ＆ドロップで席を入れ替えられます</div>
+    <button class="btn-reshuffle" id="btn-reshuffle" onclick="generate()" disabled>もう一度シャッフル</button>
 </div>
 
 <script>
 var dragSrc = null;
+var isAnimating = false;
 
 function updateInfo() {
     var cols = parseInt(document.getElementById('cols').value) || 0;
@@ -297,11 +127,35 @@ function updateInfo() {
     var start = parseInt(document.getElementById('numStart').value) || 0;
     var end = parseInt(document.getElementById('numEnd').value) || 0;
     var total = cols * rows;
-    var students = end - start + 1;
+    var students = Math.max(0, end - start + 1);
     var empty = Math.max(0, total - students);
     document.getElementById('info-total').innerText = total;
     document.getElementById('info-students').innerText = students;
     document.getElementById('info-empty').innerText = empty;
+}
+
+function addFixedRow() {
+    var list = document.getElementById('fixed-list');
+    var row = document.createElement('div');
+    row.className = 'fixed-row';
+    row.innerHTML = '<span class="fixed-label">番号</span><input class="input-field" type="number" placeholder="" min="1" style="width:70px;"><span class="fixed-label">→</span><span class="fixed-label">列</span><input class="input-field" type="number" placeholder="" min="1" style="width:70px;"><span class="fixed-label">行</span><input class="input-field" type="number" placeholder="" min="1" style="width:70px;"><button class="btn-icon remove" onclick="this.parentElement.remove()">－</button>';
+    list.appendChild(row);
+}
+
+function getFixedSeats(cols) {
+    var fixed = {};
+    var rows = document.querySelectorAll('#fixed-list .fixed-row');
+    rows.forEach(function(row) {
+        var inputs = row.querySelectorAll('input');
+        var num = parseInt(inputs[0].value);
+        var c = parseInt(inputs[1].value);
+        var r = parseInt(inputs[2].value);
+        if (num && r && c) {
+            var idx = (r - 1) * cols + (c - 1);
+            fixed[idx] = num;
+        }
+    });
+    return fixed;
 }
 
 function shuffle(arr) {
@@ -313,53 +167,124 @@ function shuffle(arr) {
 }
 
 function generate() {
+    if (isAnimating) return;
     var cols = parseInt(document.getElementById('cols').value);
     var rows = parseInt(document.getElementById('rows').value);
     var start = parseInt(document.getElementById('numStart').value);
     var end = parseInt(document.getElementById('numEnd').value);
-
     if (!cols || !rows || !start || !end || start > end) return;
+    document.getElementById('classroom').classList.add('visible');
+    setTimeout(function(){ document.getElementById('seat-grid').scrollIntoView({ behavior: 'smooth' }); }, 50);
 
     var total = cols * rows;
+    var fixedSeats = getFixedSeats(cols);
+    var fixedNums = Object.values(fixedSeats);
+
     var students = [];
-    for (var i = start; i <= end; i++) students.push(i);
+    for (var i = start; i <= end; i++) {
+        if (fixedNums.indexOf(i) === -1) students.push(i);
+    }
     shuffle(students);
 
-    // 空席を右下に追加
-    while (students.length < total) students.push(null);
+    var finalArr = [];
+    var si = 0;
+    for (var i = 0; i < total; i++) {
+        if (fixedSeats[i] !== undefined) {
+            finalArr.push({ num: fixedSeats[i], fixed: true });
+        } else if (si < students.length) {
+            finalArr.push({ num: students[si++], fixed: false });
+        } else {
+            finalArr.push({ num: null, fixed: false });
+        }
+    }
 
     var grid = document.getElementById('seat-grid');
     grid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
     grid.innerHTML = '';
+    document.getElementById('classroom').classList.add('visible');
+    
+    document.getElementById('drag-hint').style.display = 'none';
+    document.getElementById('btn-reshuffle').disabled = true;
+    document.getElementById('btn-generate').disabled = true;
+    document.getElementById('btn-generate').innerText = 'シャッフル中...';
+    isAnimating = true;
 
+    var allNums = [];
+    for (var i = start; i <= end; i++) allNums.push(i);
+
+    var seats = [];
     for (var i = 0; i < total; i++) {
         var seat = document.createElement('div');
-        seat.className = 'seat' + (students[i] === null ? ' empty' : '');
-        seat.innerText = students[i] === null ? '空席' : students[i];
-        seat.dataset.num = students[i] === null ? '' : students[i];
-
-        if (students[i] !== null) {
-            seat.draggable = true;
-            seat.addEventListener('dragstart', onDragStart);
-            seat.addEventListener('dragover', onDragOver);
-            seat.addEventListener('dragleave', onDragLeave);
-            seat.addEventListener('drop', onDrop);
-            seat.addEventListener('dragend', onDragEnd);
+        var item = finalArr[i];
+        if (item.num === null) {
+            seat.className = 'seat empty';
+            seat.innerText = '空席';
+        } else {
+            seat.className = 'seat rolling';
+            seat.innerText = '?';
+            seat.dataset.final = item.num;
+            seat.dataset.fixed = item.fixed ? '1' : '0';
         }
-
-        // シャッフルアニメーション
-        var delay = i * 18;
-        seat.style.animationDelay = delay + 'ms';
-        seat.classList.add('shuffling');
-        seat.addEventListener('animationend', function() {
-            this.classList.remove('shuffling');
-        });
-
         grid.appendChild(seat);
+        seats.push(seat);
     }
 
-    document.getElementById('classroom').classList.add('visible');
-    document.getElementById('classroom').scrollIntoView({ behavior: 'smooth' });
+    // ぐるぐるフェーズ（3秒）
+    var rollDuration = 3000;
+    var activeSeat = seats.filter(function(s) { return !s.classList.contains('empty'); });
+
+    var rollers = activeSeat.map(function(seat) {
+        var interval = setInterval(function() {
+            seat.innerText = allNums[Math.floor(Math.random() * allNums.length)];
+        }, 60);
+        return { seat: seat, interval: interval };
+    });
+
+    // 3秒後に一斉にドン！
+    setTimeout(function() {
+        rollers.forEach(function(r) {
+            clearInterval(r.interval);
+        });
+
+        // 全席同時にピカッと光らせてから確定
+        activeSeat.forEach(function(seat) {
+            seat.style.transition = 'all 0.1s';
+            seat.style.transform = 'scale(1.15)';
+            seat.style.boxShadow = '0 0 20px rgba(124,106,255,0.8)';
+        });
+
+        setTimeout(function() {
+            activeSeat.forEach(function(seat) {
+                seat.innerText = seat.dataset.final;
+                seat.style.transform = 'scale(1)';
+                seat.style.boxShadow = '';
+
+                if (seat.dataset.fixed === '1') {
+                    seat.className = 'seat';
+                    seat.draggable = true;
+                    seat.addEventListener('dragstart', onDragStart);
+                    seat.addEventListener('dragover', onDragOver);
+                    seat.addEventListener('dragleave', onDragLeave);
+                    seat.addEventListener('drop', onDrop);
+                    seat.addEventListener('dragend', onDragEnd);
+                } else {
+                    seat.className = 'seat';
+                    seat.draggable = true;
+                    seat.addEventListener('dragstart', onDragStart);
+                    seat.addEventListener('dragover', onDragOver);
+                    seat.addEventListener('dragleave', onDragLeave);
+                    seat.addEventListener('drop', onDrop);
+                    seat.addEventListener('dragend', onDragEnd);
+                }
+            });
+
+            isAnimating = false;
+            document.getElementById('drag-hint').style.display = 'block';
+            document.getElementById('btn-reshuffle').disabled = false;
+            document.getElementById('btn-generate').disabled = false;
+            document.getElementById('btn-generate').innerText = '席替えスタート';
+        }, 150);
+    }, rollDuration);
 }
 
 function onDragStart(e) {
@@ -367,32 +292,23 @@ function onDragStart(e) {
     this.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
 }
-
 function onDragOver(e) {
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
     if (this !== dragSrc) this.classList.add('drag-over');
 }
-
-function onDragLeave() {
-    this.classList.remove('drag-over');
-}
-
+function onDragLeave() { this.classList.remove('drag-over'); }
 function onDrop(e) {
     e.preventDefault();
-    if (this === dragSrc) return;
+    if (this === dragSrc || this.classList.contains('empty') || this.classList.contains('fixed-seat')) return;
     var srcText = dragSrc.innerText;
     var dstText = this.innerText;
     dragSrc.innerText = dstText;
     this.innerText = srcText;
     this.classList.remove('drag-over');
 }
-
 function onDragEnd() {
     this.classList.remove('dragging');
-    document.querySelectorAll('.seat').forEach(function(s) {
-        s.classList.remove('drag-over');
-    });
+    document.querySelectorAll('.seat').forEach(function(s) { s.classList.remove('drag-over'); });
 }
 
 updateInfo();
